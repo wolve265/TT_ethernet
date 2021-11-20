@@ -8,8 +8,10 @@ sys.path.append(parent)
 from icmplib import multiping
 from ARP.arp_scanner import scan_arp
 
+number_of_pings = 1
 list_of_ip = ['192.168.0.206', '192.168.0.102', '192.168.0.136']
-hosts = multiping(list_of_ip)
+hosts = multiping(list_of_ip, number_of_pings)
+print(hosts)
 
 for host in hosts:
     if host.is_alive:
