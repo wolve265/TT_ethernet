@@ -1,17 +1,17 @@
-from scapy.all import srp,Ether,ARP
+from scapy.all import srp,Ether,ARP,conf
 
 def scan_arp(ip):
+    print("Scanning...")
+    conf.verb = 0 # verbose disable
     arp_r = ARP(pdst=ip)
     br = Ether(dst='ff:ff:ff:ff:ff:ff')
     request = br/arp_r
-    answered, unanswered = srp(request, timeout=1)
-    print('\tIP\t\t\t\t\tMAC')
-    print('_' * 37)
+    answered, _ = srp(request, timeout=1)
+    print(f"IP \t\t\t MAC")
     for i in answered:
         ip, mac = i[1].psrc, i[1].hwsrc
-        print(ip, '\t\t' + mac)
-        print('-' * 37)
+        print(ip, '\t\t', mac)
 
 
 if __name__ == "__main__":
-    scan_arp("192.168.0.0/255")
+    scan_arp("192.168.0.0/24")
